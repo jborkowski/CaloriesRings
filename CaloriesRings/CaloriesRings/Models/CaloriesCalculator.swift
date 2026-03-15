@@ -231,6 +231,25 @@ struct CaloriesCalculator {
     }
 }
 
+// MARK: - Macro Goals
+
+extension CaloriesCalculator {
+    struct MacroGoals: Sendable {
+        let proteinGrams: Double
+        let carbsGrams: Double
+        let fatGrams: Double
+    }
+
+    static func macroGoals(dailyCalorieGoal: Int) -> MacroGoals {
+        let kcal = Double(dailyCalorieGoal)
+        return MacroGoals(
+            proteinGrams: kcal * 0.30 / 4,
+            carbsGrams:   kcal * 0.40 / 4,
+            fatGrams:     kcal * 0.30 / 9
+        )
+    }
+}
+
 // MARK: - Zone Calculator
 
 /// Calculates color zones for calorie progress indicators

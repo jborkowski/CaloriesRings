@@ -19,6 +19,8 @@ final class LoggingPresenter {
         do {
             try context.save()
             WidgetCenter.shared.reloadTimelines(ofKind: "CaloriesRingsWidget")
+            let (cal, date) = (entry.deltaCalories, entry.timestamp)
+            Task { await HealthKitManager.shared.log(calories: cal, proteinGrams: 0, carbsGrams: 0, fatGrams: 0, at: date) }
             return true
         } catch {
             errorMessage = "Failed to save: \(error.localizedDescription)"

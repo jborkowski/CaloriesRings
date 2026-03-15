@@ -47,6 +47,15 @@ struct TodayView: View {
                 Text("Snacks: \(totals.snack) kcal").font(.caption).foregroundStyle(.secondary)
             }
 
+            let macros = presenter.macroTotals(from: entries)
+            let goals = CaloriesCalculator.macroGoals(dailyCalorieGoal: profile.dailyCalorieGoal)
+            HStack(spacing: 24) {
+                MacroRingView(label: "Protein", current: macros.proteinGrams, goal: goals.proteinGrams, color: .blue)
+                MacroRingView(label: "Carbs",   current: macros.carbsGrams,   goal: goals.carbsGrams,   color: .yellow)
+                MacroRingView(label: "Fat",     current: macros.fatGrams,     goal: goals.fatGrams,     color: .red)
+            }
+            .padding(.top, 8)
+
             Button(action: { presenter.showingLogSheet = true }) {
                 Label("Log \(presenter.activeMeal.label)", systemImage: "plus.circle.fill").font(.title2)
             }

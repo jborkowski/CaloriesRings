@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E0625822EDB6F0000DA7656 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0625632EDB6EA900DA7656 /* WidgetKit.framework */; };
 		8E0625832EDB6F0000DA7656 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0625652EDB6EA900DA7656 /* SwiftUI.framework */; };
+		AA0000FF000000000000FF01 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0000FF000000000000FF00 /* HealthKit.framework */; };
 		8E0625942EDB6F0100DA7656 /* CaloriesRingsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E0625812EDB6F0000DA7656 /* CaloriesRingsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 		8E06253D2EDB3FB600DA7656 /* CaloriesRings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaloriesRings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0625632EDB6EA900DA7656 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8E0625652EDB6EA900DA7656 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		AA0000FF000000000000FF00 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		8E0625812EDB6F0000DA7656 /* CaloriesRingsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CaloriesRingsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA00000100000000000000BA /* CaloriesRingsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaloriesRingsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -92,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA0000FF000000000000FF01 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +143,7 @@
 			children = (
 				8E0625632EDB6EA900DA7656 /* WidgetKit.framework */,
 				8E0625652EDB6EA900DA7656 /* SwiftUI.framework */,
+				AA0000FF000000000000FF00 /* HealthKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -447,6 +451,9 @@
 				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "CaloriesRings uses the camera to analyze your food and estimate macros.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "CaloriesRings reads your health data to stay in sync.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings writes your meals, calories, and macros to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -480,6 +487,9 @@
 				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "CaloriesRings uses the camera to analyze your food and estimate macros.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "CaloriesRings reads your health data to stay in sync.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings writes your meals, calories, and macros to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

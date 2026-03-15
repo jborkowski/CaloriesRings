@@ -71,4 +71,19 @@ final class TodayPresenter {
     func mealProgress(consumed: Int, target: Int) -> Double {
         ZoneCalculator.calculateProgress(consumed: consumed, target: target)
     }
+
+    struct MacroTotals {
+        let proteinGrams: Double
+        let carbsGrams: Double
+        let fatGrams: Double
+    }
+
+    func macroTotals(from entries: [MealEntry]) -> MacroTotals {
+        let today = entries.filter { Calendar.current.isDateInToday($0.timestamp) }
+        return MacroTotals(
+            proteinGrams: today.reduce(0) { $0 + $1.proteinGrams },
+            carbsGrams:   today.reduce(0) { $0 + $1.carbsGrams },
+            fatGrams:     today.reduce(0) { $0 + $1.fatGrams }
+        )
+    }
 }

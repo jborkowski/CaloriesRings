@@ -7,10 +7,19 @@ struct LoggingSheetView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @State private var presenter = LoggingPresenter()
+    @State private var showingPhotoAnalysis = false
 
     var body: some View {
         VStack(spacing: 16) {
             Text("Log calories").font(.headline)
+
+            Button {
+                showingPhotoAnalysis = true
+            } label: {
+                Label("Scan food with AI", systemImage: "camera.fill")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
 
             Picker("Meal", selection: $presenter.selectedMeal) {
                 ForEach(MealType.allCases, id: \.self) { meal in
@@ -39,6 +48,9 @@ struct LoggingSheetView: View {
         }
         .padding()
         .onAppear { presenter.selectedMeal = initialMeal }
+        .sheet(isPresented: $showingPhotoAnalysis) {
+            PhotoAnalysisSheetView(initialMeal: presenter.selectedMeal)
+        }
         .alert("Error", isPresented: $presenter.showingError) {
             Button("OK", role: .cancel) { }
         } message: {

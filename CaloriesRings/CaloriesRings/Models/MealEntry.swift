@@ -36,6 +36,9 @@ final class MealEntry {
     var mealTypeRaw: String
     var deltaCalories: Int
     var note: String?
+    var proteinGrams: Double = 0.0
+    var carbsGrams: Double = 0.0
+    var fatGrams: Double = 0.0
     var mealType: MealType {
         get { MealType(rawValue: mealTypeRaw) ?? .breakfast }
         set { mealTypeRaw = newValue.rawValue }
@@ -45,12 +48,18 @@ final class MealEntry {
         timestamp: Date = .now,
         mealType: MealType,
         deltaCalories: Int,
-        note: String? = nil
+        note: String? = nil,
+        proteinGrams: Double = 0.0,
+        carbsGrams: Double = 0.0,
+        fatGrams: Double = 0.0
     ) {
         self.id = id
         self.timestamp = timestamp
         self.mealTypeRaw = mealType.rawValue
         self.deltaCalories = deltaCalories
         self.note = note
+        self.proteinGrams = proteinGrams
+        self.carbsGrams = carbsGrams
+        self.fatGrams = fatGrams
     }
 }

@@ -3,7 +3,7 @@ import SwiftData
 
 @main
 struct CalorieRingsApp: App {
-    @StateObject private var appState = AppState()
+    @State private var appState = AppState()
     @State private var initializationError: Error?
 
     var sharedModelContainer: ModelContainer = {
@@ -28,7 +28,7 @@ struct CalorieRingsApp: App {
         let configuration = ModelConfiguration(
             schema: schema,
             url: storeURL,
-            cloudKitDatabase: .automatic
+            cloudKitDatabase: .none
         )
         
         do {
@@ -58,7 +58,7 @@ struct CalorieRingsApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environmentObject(appState)
+                .environment(appState)
         }
         .modelContainer(sharedModelContainer)
     }

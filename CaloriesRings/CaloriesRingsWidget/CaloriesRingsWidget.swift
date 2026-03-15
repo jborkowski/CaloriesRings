@@ -1,6 +1,6 @@
 //
-//  CalorieRingsWidget.swift
-//  CalorieRingsWidget
+//  CaloriesRingsWidget.swift
+//  CaloriesRingsWidget
 //
 //  Simplified static widget so the project compiles
 //
@@ -72,7 +72,7 @@ private func loadTodayWidgetSummary() -> WidgetSummary {
     let configuration = ModelConfiguration(
         schema: schema,
         url: storeURL,
-        cloudKitDatabase: .automatic
+        cloudKitDatabase: .none
     )
 
     do {
@@ -82,11 +82,14 @@ private func loadTodayWidgetSummary() -> WidgetSummary {
         )
         let context = ModelContext(container)
 
-        let entriesDescriptor = FetchDescriptor<MealEntry>()
-        let entries = try context.fetch(entriesDescriptor)
-
-        let calendar = Calendar.current
-        let todayEntries = entries.filter { calendar.isDateInToday($0.timestamp) }
+        let startOfToday = Calendar.current.startOfDay(for: Date())
+        let endOfToday = Calendar.current.date(byAdding: .day, value: 1, to: startOfToday)!
+        let descriptor = FetchDescriptor<MealEntry>(
+            predicate: #Predicate<MealEntry> { entry in
+                entry.timestamp >= startOfToday && entry.timestamp < endOfToday
+            }
+        )
+        let todayEntries = try context.fetch(descriptor)
         let total = todayEntries.reduce(0) { $0 + $1.deltaCalories }
 
         let profilesDescriptor = FetchDescriptor<UserProfile>()
@@ -99,7 +102,7 @@ private func loadTodayWidgetSummary() -> WidgetSummary {
     }
 }
 
-struct CalorieRingsWidgetEntryView: View {
+struct CaloriesRingsWidgetEntryView: View {
     let entry: CalorieEntry
 
     private var progress: Double {
@@ -151,15 +154,15 @@ struct CalorieRingsWidgetEntryView: View {
     }
 }
 
-struct CalorieRingsWidget: Widget {
-    let kind: String = "CalorieRingsWidget"
+struct CaloriesRingsWidget: Widget {
+    let kind: String = "CaloriesRingsWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(
             kind: kind,
             provider: Provider()
         ) { entry in
-            CalorieRingsWidgetEntryView(entry: entry)
+            CaloriesRingsWidgetEntryView(entry: entry)
                 .widgetURL(URL(string: "calorierings://log"))
                 .containerBackground(.fill.tertiary, for: .widget)
         }

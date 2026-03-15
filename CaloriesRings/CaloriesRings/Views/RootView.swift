@@ -3,7 +3,7 @@ import SwiftData
 
 struct RootView: View {
     @Environment(\.modelContext) private var context
-    @EnvironmentObject private var appState: AppState
+    @Environment(AppState.self) private var appState
     @Query var profiles: [UserProfile]
 
     var body: some View {
@@ -11,9 +11,14 @@ struct RootView: View {
             if let profile = profiles.first,
                profile.onboardingCompletedAt != nil {
                 MainTabView(profile: profile)
-                    .environmentObject(appState)
+                    .environment(appState)
             } else {
                 OnboardingView()
+            }
+        }
+        .onOpenURL { url in
+            if url.scheme == "calorierings" && url.host == "log" {
+                appState.showLogSheetFromDeepLink = true
             }
         }
     }

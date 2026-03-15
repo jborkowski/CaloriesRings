@@ -7,11 +7,26 @@
 
 import Foundation
 import SwiftData
-enum MealType: String, Codable, CaseIterable {
-    case breakfast
-    case lunch
-    case dinner
-    case snack
+enum MealType: String, Codable, CaseIterable, Sendable {
+    case breakfast, lunch, dinner, snack
+
+    var label: String {
+        switch self {
+        case .breakfast: return "Breakfast"
+        case .lunch: return "Lunch"
+        case .dinner: return "Dinner"
+        case .snack: return "Snack"
+        }
+    }
+
+    var shortLabel: String {
+        switch self {
+        case .breakfast: return "B"
+        case .lunch: return "L"
+        case .dinner: return "D"
+        case .snack: return "S"
+        }
+    }
 }
 
 @Model

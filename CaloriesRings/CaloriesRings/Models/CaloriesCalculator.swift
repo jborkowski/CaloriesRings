@@ -1,5 +1,5 @@
 //
-//  CalorieCalculator.swift
+//  CaloriesCalculator.swift
 //  CaloriesRings
 //
 //  Business logic for calorie calculations
@@ -9,7 +9,7 @@
 import Foundation
 
 /// Encapsulates all calorie-related calculations using evidence-based formulas
-struct CalorieCalculator {
+struct CaloriesCalculator {
     
     // MARK: - Constants
     
@@ -27,7 +27,7 @@ struct CalorieCalculator {
     
     // MARK: - Types
     
-    enum BiologicalSex {
+    enum BiologicalSex: Sendable {
         case male
         case female
         
@@ -40,7 +40,7 @@ struct CalorieCalculator {
         }
     }
     
-    enum ActivityLevel {
+    enum ActivityLevel: Sendable {
         case sedentary      // Mostly sitting, little exercise
         case light          // Light exercise 1-3 days/week
         case moderate       // Moderate exercise 3-5 days/week
@@ -65,16 +65,16 @@ struct CalorieCalculator {
         }
     }
     
-    enum WeightGoal {
+    enum WeightGoal: Sendable {
         case lose       // Gentle weight loss
         case maintain   // Maintain current weight
         case gain       // Controlled weight gain
         
         var calorieAdjustment: Int {
             switch self {
-            case .lose: return -CalorieCalculator.weightLossDeficit
+            case .lose: return -CaloriesCalculator.weightLossDeficit
             case .maintain: return 0
-            case .gain: return CalorieCalculator.weightGainSurplus
+            case .gain: return CaloriesCalculator.weightGainSurplus
             }
         }
         
@@ -87,7 +87,7 @@ struct CalorieCalculator {
         }
     }
     
-    struct UserMetrics {
+    struct UserMetrics: Sendable {
         let age: Int
         let sex: BiologicalSex
         let heightCm: Int
@@ -101,7 +101,7 @@ struct CalorieCalculator {
         }
     }
     
-    struct CalorieGoal {
+    struct CalorieGoal: Sendable {
         let dailyTotal: Int
         let bmr: Double
         let tdee: Int
@@ -205,7 +205,7 @@ struct CalorieCalculator {
     /// - Moderate lunch to maintain energy
     /// - Lighter dinner to avoid late-day surplus
     /// - Snacks tracked but not allocated by default
-    struct MealDistribution {
+    struct MealDistribution: Sendable {
         static let breakfastPercent = 0.4   // 40%
         static let lunchPercent = 0.35      // 35%
         static let dinnerPercent = 0.25     // 25%
@@ -228,10 +228,6 @@ struct CalorieCalculator {
             self.snack = 0  // User can add snacks but no default target
         }
         
-        /// Verifies that meal targets sum to daily goal
-        var isValid: Bool {
-            return (breakfast + lunch + dinner + snack) == (breakfast + lunch + dinner)
-        }
     }
 }
 
@@ -240,7 +236,7 @@ struct CalorieCalculator {
 /// Calculates color zones for calorie progress indicators
 struct ZoneCalculator {
     
-    enum Zone {
+    enum Zone: Sendable {
         case green      // On target or under
         case yellow     // Slightly over target
         case red        // Significantly over target
@@ -301,22 +297,3 @@ struct ZoneCalculator {
     }
 }
 
-// MARK: - Date Helpers
-
-/// Utilities for date-based filtering of meal entries
-extension Calendar {
-    
-    /// Gets start of day for a date
-    /// - Parameter date: Any date
-    /// - Returns: Midnight of that day
-    func startOfDay(for date: Date) -> Date {
-        return self.startOfDay(for: date)
-    }
-    
-    /// Checks if a date is today
-    /// - Parameter date: Date to check
-    /// - Returns: True if date is in today
-    func isDateInToday(_ date: Date) -> Bool {
-        return self.isDateInToday(date)
-    }
-}

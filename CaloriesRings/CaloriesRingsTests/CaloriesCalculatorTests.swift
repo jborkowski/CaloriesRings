@@ -1,5 +1,5 @@
 //
-//  CalorieCalculatorTests.swift
+//  CaloriesCalculatorTests.swift
 //  CaloriesRings
 //
 //  Created on 15/03/2026.
@@ -8,19 +8,20 @@
 import Testing
 @testable import CaloriesRings
 
-@Suite("Calorie Calculator - BMR Calculations")
+@Suite("Calories Calculator - BMR Calculations")
+@MainActor
 struct BMRCalculationTests {
     
     @Test("BMR calculation for adult male")
     func bmrMale() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 30,
             sex: .male,
             heightCm: 175,
             weightKg: 90
         )
         
-        let bmr = CalorieCalculator.calculateBMR(metrics: metrics)
+        let bmr = CaloriesCalculator.calculateBMR(metrics: metrics)
         
         // 10 * 90 + 6.25 * 175 - 5 * 30 + 5 = 1848.75
         #expect(bmr == 1848.75, "BMR should match Mifflin-St Jeor formula for males")
@@ -28,14 +29,14 @@ struct BMRCalculationTests {
     
     @Test("BMR calculation for adult female")
     func bmrFemale() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 30,
             sex: .female,
             heightCm: 165,
             weightKg: 70
         )
         
-        let bmr = CalorieCalculator.calculateBMR(metrics: metrics)
+        let bmr = CaloriesCalculator.calculateBMR(metrics: metrics)
         
         // 10 * 70 + 6.25 * 165 - 5 * 30 - 161 = 1420.25
         #expect(bmr == 1420.25, "BMR should match Mifflin-St Jeor formula for females")
@@ -43,53 +44,54 @@ struct BMRCalculationTests {
     
     @Test("BMR increases with weight")
     func bmrWeightRelationship() {
-        let lighter = CalorieCalculator.UserMetrics(age: 30, sex: .male, heightCm: 175, weightKg: 70)
-        let heavier = CalorieCalculator.UserMetrics(age: 30, sex: .male, heightCm: 175, weightKg: 90)
+        let lighter = CaloriesCalculator.UserMetrics(age: 30, sex: .male, heightCm: 175, weightKg: 70)
+        let heavier = CaloriesCalculator.UserMetrics(age: 30, sex: .male, heightCm: 175, weightKg: 90)
         
-        let bmrLight = CalorieCalculator.calculateBMR(metrics: lighter)
-        let bmrHeavy = CalorieCalculator.calculateBMR(metrics: heavier)
+        let bmrLight = CaloriesCalculator.calculateBMR(metrics: lighter)
+        let bmrHeavy = CaloriesCalculator.calculateBMR(metrics: heavier)
         
         #expect(bmrHeavy > bmrLight, "Heavier person should have higher BMR")
     }
     
     @Test("BMR decreases with age")
     func bmrAgeRelationship() {
-        let younger = CalorieCalculator.UserMetrics(age: 25, sex: .male, heightCm: 175, weightKg: 80)
-        let older = CalorieCalculator.UserMetrics(age: 50, sex: .male, heightCm: 175, weightKg: 80)
+        let younger = CaloriesCalculator.UserMetrics(age: 25, sex: .male, heightCm: 175, weightKg: 80)
+        let older = CaloriesCalculator.UserMetrics(age: 50, sex: .male, heightCm: 175, weightKg: 80)
         
-        let bmrYoung = CalorieCalculator.calculateBMR(metrics: younger)
-        let bmrOld = CalorieCalculator.calculateBMR(metrics: older)
+        let bmrYoung = CaloriesCalculator.calculateBMR(metrics: younger)
+        let bmrOld = CaloriesCalculator.calculateBMR(metrics: older)
         
         #expect(bmrYoung > bmrOld, "Younger person should have higher BMR")
     }
 }
 
-@Suite("Calorie Calculator - Activity Levels")
+@Suite("Calories Calculator - Activity Levels")
+@MainActor
 struct ActivityLevelTests {
     
     @Test("Activity level multipliers are correct")
     func activityMultipliers() {
-        #expect(CalorieCalculator.ActivityLevel.sedentary.multiplier == 1.2)
-        #expect(CalorieCalculator.ActivityLevel.light.multiplier == 1.375)
-        #expect(CalorieCalculator.ActivityLevel.moderate.multiplier == 1.55)
-        #expect(CalorieCalculator.ActivityLevel.veryActive.multiplier == 1.725)
+        #expect(CaloriesCalculator.ActivityLevel.sedentary.multiplier == 1.2)
+        #expect(CaloriesCalculator.ActivityLevel.light.multiplier == 1.375)
+        #expect(CaloriesCalculator.ActivityLevel.moderate.multiplier == 1.55)
+        #expect(CaloriesCalculator.ActivityLevel.veryActive.multiplier == 1.725)
     }
     
     @Test("Activity level from index", arguments: [
-        (0, CalorieCalculator.ActivityLevel.sedentary),
-        (1, CalorieCalculator.ActivityLevel.light),
-        (2, CalorieCalculator.ActivityLevel.moderate),
-        (3, CalorieCalculator.ActivityLevel.veryActive)
+        (0, CaloriesCalculator.ActivityLevel.sedentary),
+        (1, CaloriesCalculator.ActivityLevel.light),
+        (2, CaloriesCalculator.ActivityLevel.moderate),
+        (3, CaloriesCalculator.ActivityLevel.veryActive)
     ])
-    func activityFromIndex(index: Int, expected: CalorieCalculator.ActivityLevel) {
-        let activity = CalorieCalculator.ActivityLevel(index: index)
+    func activityFromIndex(index: Int, expected: CaloriesCalculator.ActivityLevel) {
+        let activity = CaloriesCalculator.ActivityLevel(index: index)
         #expect(activity == expected)
     }
     
     @Test("TDEE calculation with sedentary activity")
     func tdeeSedentary() {
         let bmr = 1800.0
-        let tdee = CalorieCalculator.calculateTDEE(bmr: bmr, activityLevel: .sedentary)
+        let tdee = CaloriesCalculator.calculateTDEE(bmr: bmr, activityLevel: .sedentary)
         
         #expect(tdee == 2160, "TDEE = BMR * 1.2 = 2160")
     }
@@ -97,46 +99,48 @@ struct ActivityLevelTests {
     @Test("TDEE calculation with very active")
     func tdeeVeryActive() {
         let bmr = 2000.0
-        let tdee = CalorieCalculator.calculateTDEE(bmr: bmr, activityLevel: .veryActive)
+        let tdee = CaloriesCalculator.calculateTDEE(bmr: bmr, activityLevel: .veryActive)
         
         #expect(tdee == 3450, "TDEE = BMR * 1.725 = 3450")
     }
 }
 
-@Suite("Calorie Calculator - Weight Goals")
+@Suite("Calories Calculator - Weight Goals")
+@MainActor
 struct WeightGoalTests {
     
     @Test("Weight goal adjustments")
     func goalAdjustments() {
-        #expect(CalorieCalculator.WeightGoal.lose.calorieAdjustment == -300)
-        #expect(CalorieCalculator.WeightGoal.maintain.calorieAdjustment == 0)
-        #expect(CalorieCalculator.WeightGoal.gain.calorieAdjustment == 300)
+        #expect(CaloriesCalculator.WeightGoal.lose.calorieAdjustment == -300)
+        #expect(CaloriesCalculator.WeightGoal.maintain.calorieAdjustment == 0)
+        #expect(CaloriesCalculator.WeightGoal.gain.calorieAdjustment == 300)
     }
     
     @Test("Weight goal from index", arguments: [
-        (0, CalorieCalculator.WeightGoal.lose),
-        (1, CalorieCalculator.WeightGoal.maintain),
-        (2, CalorieCalculator.WeightGoal.gain)
+        (0, CaloriesCalculator.WeightGoal.lose),
+        (1, CaloriesCalculator.WeightGoal.maintain),
+        (2, CaloriesCalculator.WeightGoal.gain)
     ])
-    func goalFromIndex(index: Int, expected: CalorieCalculator.WeightGoal) {
-        let goal = CalorieCalculator.WeightGoal(index: index)
+    func goalFromIndex(index: Int, expected: CaloriesCalculator.WeightGoal) {
+        let goal = CaloriesCalculator.WeightGoal(index: index)
         #expect(goal == expected)
     }
 }
 
-@Suite("Calorie Calculator - Complete Goal Calculation")
+@Suite("Calories Calculator - Complete Goal Calculation")
+@MainActor
 struct CompleteGoalCalculationTests {
     
     @Test("Complete calculation: sedentary male losing weight")
-    func sedentaryMaleLoseWeight() {
-        let metrics = CalorieCalculator.UserMetrics(
+    func sedentaryMaleLoseWeight() throws {
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 30,
             sex: .male,
             heightCm: 175,
             weightKg: 90
         )
         
-        let goal = CalorieCalculator.calculateDailyGoal(
+        let goal = CaloriesCalculator.calculateDailyGoal(
             metrics: metrics,
             activityLevel: .sedentary,
             goal: .lose
@@ -154,15 +158,15 @@ struct CompleteGoalCalculationTests {
     }
     
     @Test("Complete calculation: active female maintaining")
-    func activeFemaleMatain() {
-        let metrics = CalorieCalculator.UserMetrics(
+    func activeFemaleMatain() throws {
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 35,
             sex: .female,
             heightCm: 165,
             weightKg: 65
         )
         
-        let goal = CalorieCalculator.calculateDailyGoal(
+        let goal = CaloriesCalculator.calculateDailyGoal(
             metrics: metrics,
             activityLevel: .moderate,
             goal: .maintain
@@ -180,15 +184,15 @@ struct CompleteGoalCalculationTests {
     }
     
     @Test("Complete calculation: very active male gaining")
-    func veryActiveMaleGain() {
-        let metrics = CalorieCalculator.UserMetrics(
+    func veryActiveMaleGain() throws {
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 25,
             sex: .male,
             heightCm: 180,
             weightKg: 75
         )
         
-        let goal = CalorieCalculator.calculateDailyGoal(
+        let goal = CaloriesCalculator.calculateDailyGoal(
             metrics: metrics,
             activityLevel: .veryActive,
             goal: .gain
@@ -207,46 +211,48 @@ struct CompleteGoalCalculationTests {
     }
 }
 
-@Suite("Calorie Calculator - Safety Bounds")
+@Suite("Calories Calculator - Safety Bounds")
+@MainActor
 struct SafetyBoundsTests {
     
     @Test("Minimum calorie floor is enforced")
     func minimumFloor() {
-        let clamped = CalorieCalculator.clampToSafeRange(800)
+        let clamped = CaloriesCalculator.clampToSafeRange(800)
         #expect(clamped == 1200, "Should never go below 1200")
     }
     
     @Test("Maximum calorie ceiling is enforced")
     func maximumCeiling() {
-        let clamped = CalorieCalculator.clampToSafeRange(4000)
+        let clamped = CaloriesCalculator.clampToSafeRange(4000)
         #expect(clamped == 3200, "Should never exceed 3200")
     }
     
     @Test("Values in range are unchanged")
     func inRangeUnchanged() {
-        let clamped = CalorieCalculator.clampToSafeRange(2000)
+        let clamped = CaloriesCalculator.clampToSafeRange(2000)
         #expect(clamped == 2000, "Should not modify values in valid range")
     }
     
     @Test("Edge case: exactly at minimum")
     func exactlyAtMinimum() {
-        let clamped = CalorieCalculator.clampToSafeRange(1200)
+        let clamped = CaloriesCalculator.clampToSafeRange(1200)
         #expect(clamped == 1200)
     }
     
     @Test("Edge case: exactly at maximum")
     func exactlyAtMaximum() {
-        let clamped = CalorieCalculator.clampToSafeRange(3200)
+        let clamped = CaloriesCalculator.clampToSafeRange(3200)
         #expect(clamped == 3200)
     }
 }
 
-@Suite("Calorie Calculator - Input Validation")
+@Suite("Calories Calculator - Input Validation")
+@MainActor
 struct InputValidationTests {
     
     @Test("Valid metrics pass validation")
     func validMetrics() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 30,
             sex: .male,
             heightCm: 175,
@@ -258,7 +264,7 @@ struct InputValidationTests {
     
     @Test("Age below minimum is invalid")
     func ageTooLow() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 15,
             sex: .male,
             heightCm: 175,
@@ -270,7 +276,7 @@ struct InputValidationTests {
     
     @Test("Age above maximum is invalid")
     func ageTooHigh() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 91,
             sex: .male,
             heightCm: 175,
@@ -282,7 +288,7 @@ struct InputValidationTests {
     
     @Test("Height below minimum is invalid")
     func heightTooLow() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 30,
             sex: .male,
             heightCm: 129,
@@ -294,7 +300,7 @@ struct InputValidationTests {
     
     @Test("Weight below minimum is invalid")
     func weightTooLow() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 30,
             sex: .male,
             heightCm: 175,
@@ -306,14 +312,14 @@ struct InputValidationTests {
     
     @Test("Invalid metrics return nil goal")
     func invalidMetricsReturnNil() {
-        let metrics = CalorieCalculator.UserMetrics(
+        let metrics = CaloriesCalculator.UserMetrics(
             age: 10,  // Invalid
             sex: .male,
             heightCm: 175,
             weightKg: 80
         )
         
-        let goal = CalorieCalculator.calculateDailyGoal(
+        let goal = CaloriesCalculator.calculateDailyGoal(
             metrics: metrics,
             activityLevel: .moderate,
             goal: .maintain
@@ -323,12 +329,13 @@ struct InputValidationTests {
     }
 }
 
-@Suite("Calorie Calculator - Meal Distribution")
+@Suite("Calories Calculator - Meal Distribution")
+@MainActor
 struct MealDistributionTests {
     
     @Test("Meal distribution for 1800 kcal")
     func distribution1800() {
-        let dist = CalorieCalculator.MealDistribution(dailyGoal: 1800)
+        let dist = CaloriesCalculator.MealDistribution(dailyGoal: 1800)
         
         #expect(dist.breakfast == 720, "40% of 1800")
         #expect(dist.lunch == 630, "35% of 1800")
@@ -338,7 +345,7 @@ struct MealDistributionTests {
     
     @Test("Meal distribution for 2400 kcal")
     func distribution2400() {
-        let dist = CalorieCalculator.MealDistribution(dailyGoal: 2400)
+        let dist = CaloriesCalculator.MealDistribution(dailyGoal: 2400)
         
         #expect(dist.breakfast == 960, "40% of 2400")
         #expect(dist.lunch == 840, "35% of 2400")
@@ -350,20 +357,16 @@ struct MealDistributionTests {
         1200, 1500, 1800, 2000, 2200, 2400, 2600, 3000, 3200
     ])
     func sumEqualsDailyGoal(dailyGoal: Int) {
-        let dist = CalorieCalculator.MealDistribution(dailyGoal: dailyGoal)
+        let dist = CaloriesCalculator.MealDistribution(dailyGoal: dailyGoal)
         let sum = dist.breakfast + dist.lunch + dist.dinner + dist.snack
         
         #expect(sum == dailyGoal, "Meal targets should always sum to daily goal")
     }
     
-    @Test("Distribution validation")
-    func distributionIsValid() {
-        let dist = CalorieCalculator.MealDistribution(dailyGoal: 2000)
-        #expect(dist.isValid, "Distribution should be valid")
-    }
 }
 
 @Suite("Zone Calculator - Zone Classification")
+@MainActor
 struct ZoneClassificationTests {
     
     @Test("On target is green zone")
@@ -415,6 +418,7 @@ struct ZoneClassificationTests {
 }
 
 @Suite("Zone Calculator - Progress Calculation")
+@MainActor
 struct ProgressCalculationTests {
     
     @Test("Empty progress is zero")
@@ -448,30 +452,31 @@ struct ProgressCalculationTests {
     }
 }
 
-@Suite("Calorie Calculator - BiologicalSex Parsing")
+@Suite("Calories Calculator - BiologicalSex Parsing")
+@MainActor
 struct BiologicalSexParsingTests {
     
     @Test("Parse 'male' string")
     func parseMale() {
-        let sex = CalorieCalculator.BiologicalSex(string: "male")
+        let sex = CaloriesCalculator.BiologicalSex(string: "male")
         #expect(sex == .male)
     }
     
     @Test("Parse 'female' string")
     func parseFemale() {
-        let sex = CalorieCalculator.BiologicalSex(string: "female")
+        let sex = CaloriesCalculator.BiologicalSex(string: "female")
         #expect(sex == .female)
     }
     
     @Test("Parse case-insensitive")
     func parseCaseInsensitive() {
-        #expect(CalorieCalculator.BiologicalSex(string: "MALE") == .male)
-        #expect(CalorieCalculator.BiologicalSex(string: "Female") == .female)
+        #expect(CaloriesCalculator.BiologicalSex(string: "MALE") == .male)
+        #expect(CaloriesCalculator.BiologicalSex(string: "Female") == .female)
     }
     
     @Test("Invalid string returns nil")
     func parseInvalid() {
-        let sex = CalorieCalculator.BiologicalSex(string: "other")
+        let sex = CaloriesCalculator.BiologicalSex(string: "other")
         #expect(sex == nil, "Invalid sex string should return nil")
     }
 }

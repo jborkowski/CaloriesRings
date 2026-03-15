@@ -44,4 +44,17 @@ struct TodayPresenterTests {
         let progress = presenter.mealProgress(consumed: 1000, target: 500)
         #expect(progress == 1.5)
     }
+
+    @Test("Macro totals sums today's entries")
+    @MainActor
+    func macroTotals_sums_todays_entries() {
+        let entries = [
+            MealEntry(mealType: .lunch, deltaCalories: 400, proteinGrams: 30, carbsGrams: 50, fatGrams: 10),
+            MealEntry(mealType: .dinner, deltaCalories: 600, proteinGrams: 45, carbsGrams: 70, fatGrams: 20)
+        ]
+        let totals = TodayPresenter().macroTotals(from: entries)
+        #expect(totals.proteinGrams == 75)
+        #expect(totals.carbsGrams == 120)
+        #expect(totals.fatGrams == 30)
+    }
 }

@@ -17,12 +17,13 @@ struct HistoryPresenterTests {
     @MainActor
     func chartPointsAccumulate() {
         let presenter = HistoryPresenter()
-        let now = Date()
+        // Use noon to avoid midnight boundary issues
+        let noon = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         let entries = [
-            MealEntry(timestamp: now, mealType: .breakfast, deltaCalories: 300),
-            MealEntry(timestamp: now.addingTimeInterval(3600), mealType: .lunch, deltaCalories: 500)
+            MealEntry(timestamp: noon, mealType: .breakfast, deltaCalories: 300),
+            MealEntry(timestamp: noon.addingTimeInterval(3600), mealType: .lunch, deltaCalories: 500)
         ]
-        let points = presenter.chartPoints(for: entries, on: now)
+        let points = presenter.chartPoints(for: entries, on: noon)
         #expect(points.count == 2)
         #expect(points[0].total == 300)
         #expect(points[1].total == 800)

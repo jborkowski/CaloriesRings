@@ -10,6 +10,9 @@
 		8E0625822EDB6F0000DA7656 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0625632EDB6EA900DA7656 /* WidgetKit.framework */; };
 		8E0625832EDB6F0000DA7656 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0625652EDB6EA900DA7656 /* SwiftUI.framework */; };
 		8E0625942EDB6F0100DA7656 /* CalorieRingsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E0625812EDB6F0000DA7656 /* CalorieRingsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8EFD565F2F67015600C8E33C /* ARCHITECTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = 8EFD565E2F67015600C8E33C /* ARCHITECTURE.md */; };
+		8EFD56612F67018400C8E33C /* CalorieCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFD56602F67018400C8E33C /* CalorieCalculator.swift */; };
+		8EFD56632F6701C100C8E33C /* CalorieCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFD56622F6701C100C8E33C /* CalorieCalculatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,9 @@
 		8E0625652EDB6EA900DA7656 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8E0625812EDB6F0000DA7656 /* CalorieRingsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CalorieRingsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0625E02EDB825E00DA7656 /* CalorieRingsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CalorieRingsWidgetExtension.entitlements; sourceTree = "<group>"; };
+		8EFD565E2F67015600C8E33C /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
+		8EFD56602F67018400C8E33C /* CalorieCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieCalculator.swift; sourceTree = "<group>"; };
+		8EFD56622F6701C100C8E33C /* CalorieCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieCalculatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -109,6 +115,9 @@
 				8E0625842EDB6F0000DA7656 /* CalorieRingsWidget */,
 				8E0625622EDB6EA900DA7656 /* Frameworks */,
 				8E06253E2EDB3FB600DA7656 /* Products */,
+				8EFD565E2F67015600C8E33C /* ARCHITECTURE.md */,
+				8EFD56602F67018400C8E33C /* CalorieCalculator.swift */,
+				8EFD56622F6701C100C8E33C /* CalorieCalculatorTests.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,7 +196,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					8E06253C2EDB3FB600DA7656 = {
 						CreatedOnToolsVersion = 26.0;
@@ -229,6 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EFD565F2F67015600C8E33C /* ARCHITECTURE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +256,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EFD56612F67018400C8E33C /* CalorieCalculator.swift in Sources */,
+				8EFD56632F6701C100C8E33C /* CalorieCalculatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +307,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -318,6 +331,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -358,6 +372,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -374,6 +389,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -387,7 +403,6 @@
 				CODE_SIGN_ENTITLEMENTS = CaloriesRings/CaloriesRings.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -420,7 +435,6 @@
 				CODE_SIGN_ENTITLEMENTS = CaloriesRings/CaloriesRings.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -451,10 +465,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CalorieRingsWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = CaloriesRings;
-				DEVELOPMENT_TEAM = ATQ45662TX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalorieRingsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CalorieRingsWidget;
@@ -467,6 +481,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.thebo.CaloriesRings.CalorieRingsWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -483,10 +498,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CalorieRingsWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = CaloriesRings;
-				DEVELOPMENT_TEAM = ATQ45662TX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalorieRingsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CalorieRingsWidget;
@@ -499,6 +514,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.thebo.CaloriesRings.CalorieRingsWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

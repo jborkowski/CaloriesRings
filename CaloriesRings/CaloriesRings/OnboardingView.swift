@@ -12,6 +12,8 @@ struct OnboardingView: View {
     @State private var goalIndex: Int = 0 // 0 lose, 1 maintain, 2 gain
 
     @State private var suggestedDailyGoal: Int = 1800
+    @State private var showingError = false
+    @State private var errorMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -74,57 +76,69 @@ struct OnboardingView: View {
             .onAppear {
                 recalculateSuggestion()
             }
-            .onChange(of: age) { _ in recalculateSuggestion() }
-            .onChange(of: sex) { _ in recalculateSuggestion() }
-            .onChange(of: heightCm) { _ in recalculateSuggestion() }
-            .onChange(of: weightKg) { _ in recalculateSuggestion() }
-            .onChange(of: activityIndex) { _ in recalculateSuggestion() }
-            .onChange(of: goalIndex) { _ in recalculateSuggestion() }
+            .onChange(of: age) { recalculateSuggestion() }
+            .onChange(of: sex) { recalculateSuggestion() }
+            .onChange(of: heightCm) { recalculateSuggestion() }
+            .onChange(of: weightKg) { recalculateSuggestion() }
+            .onChange(of: activityIndex) { recalculateSuggestion() }
+            .onChange(of: goalIndex) { recalculateSuggestion() }
+            .alert("Error", isPresented: $showingError) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(errorMessage)
+            }
         }
     }
 
+    /// Recalculates suggested calorie goal using CalorieCalculator
     private func recalculateSuggestion() {
-        // Very simple Mifflin-St Jeor style estimate
-        let s = (sex == "male") ? 5.0 : -161.0
-        let bmr = 10.0 * Double(weightKg) + 6.25 * Double(heightCm) - 5.0 * Double(age) + s
-
-        let activityMultiplier: Double
-        switch activityIndex {
-        case 0: activityMultiplier = 1.2
-        case 1: activityMultiplier = 1.375
-        case 2: activityMultiplier = 1.55
-        default: activityMultiplier = 1.725
+        guard let biologicalSex = CalorieCalculator.BiologicalSex(string: sex) else {
+            return
         }
-
-        var maintenance = Int(bmr * activityMultiplier)
-
-        switch goalIndex {
-        case 0: // lose gently
-            maintenance -= 300
-        case 2: // gain
-            maintenance += 300
-        default:
-            break
+        
+        let metrics = CalorieCalculator.UserMetrics(
+            age: age,
+            sex: biologicalSex,
+            heightCm: heightCm,
+            weightKg: weightKg
+        )
+        
+        let activityLevel = CalorieCalculator.ActivityLevel(index: activityIndex)
+        let weightGoal = CalorieCalculator.WeightGoal(index: goalIndex)
+        
+        guard let calorieGoal = CalorieCalculator.calculateDailyGoal(
+            metrics: metrics,
+            activityLevel: activityLevel,
+            goal: weightGoal
+        ) else {
+            // This shouldn't happen with steppers, but handle gracefully
+            return
         }
-
-        suggestedDailyGoal = max(1200, min(maintenance, 3200))
+        
+        suggestedDailyGoal = calorieGoal.dailyTotal
     }
 
+    /// Completes onboarding and creates user profile
     private func completeOnboarding() {
-        // Simple split: 40% / 35% / 25%
-        let b = Int(Double(suggestedDailyGoal) * 0.4)
-        let l = Int(Double(suggestedDailyGoal) * 0.35)
-        let d = suggestedDailyGoal - b - l
-
+        // Use CalorieCalculator for meal distribution
+        let distribution = CalorieCalculator.MealDistribution(dailyGoal: suggestedDailyGoal)
+        
         let profile = UserProfile(
             dailyCalorieGoal: suggestedDailyGoal,
-            breakfastTarget: b,
-            lunchTarget: l,
-            dinnerTarget: d,
-            snackTarget: 0,
+            breakfastTarget: distribution.breakfast,
+            lunchTarget: distribution.lunch,
+            dinnerTarget: distribution.dinner,
+            snackTarget: distribution.snack,
             onboardingCompletedAt: Date()
         )
+        
         context.insert(profile)
-        try? context.save()
+        
+        do {
+            try context.save()
+        } catch {
+            errorMessage = "Failed to save your profile. Please try again.\n\nError: \(error.localizedDescription)"
+            showingError = true
+        }
     }
 }

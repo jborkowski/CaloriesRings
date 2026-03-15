@@ -13,6 +13,5 @@ struct CalorieRingsWidgetBundle: WidgetBundle {
     var body: some Widget {
         CalorieRingsWidget()
         CalorieRingsWidgetControl()
-        CalorieRingsWidgetLiveActivity()
     }
 }

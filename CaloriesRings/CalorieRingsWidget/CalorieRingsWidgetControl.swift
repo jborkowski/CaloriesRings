@@ -42,7 +42,7 @@ extension CalorieRingsWidgetControl {
         }
 
         func currentValue(configuration: TimerConfiguration) async throws -> Value {
-            let isRunning = true:q
+            let isRunning = true
             return CalorieRingsWidgetControl.Value(isRunning: isRunning, name: configuration.timerName)
         }
     }

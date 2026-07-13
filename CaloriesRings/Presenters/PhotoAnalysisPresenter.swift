@@ -51,8 +51,8 @@ final class PhotoAnalysisPresenter {
         do {
             try context.save()
             WidgetCenter.shared.reloadTimelines(ofKind: "CaloriesRingsWidget")
-            let (cal, prot, carbs, fat, date) = (entry.deltaCalories, entry.proteinGrams, entry.carbsGrams, entry.fatGrams, entry.timestamp)
-            Task { await HealthKitManager.shared.log(calories: cal, proteinGrams: prot, carbsGrams: carbs, fatGrams: fat, at: date) }
+            let nutrition = HealthKitNutrition(entry: entry)
+            Task { try? await HealthKitManager.shared.save(nutrition) }
             return true
         } catch {
             state = .error("Save failed: \(error.localizedDescription)")

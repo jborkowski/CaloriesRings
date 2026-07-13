@@ -59,12 +59,7 @@ struct CalorieRingsApp: App {
         WindowGroup {
             RootView()
                 .environment(appState)
-                .task {
-                    try? await HealthKitManager.shared.requestAuthorization()
-                }
         }
         .modelContainer(sharedModelContainer)
     }
 }
-
-

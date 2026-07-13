@@ -465,8 +465,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CaloriesRings uses the camera to analyze your food and estimate macros.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "CaloriesRings reads your health data to stay in sync.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings writes your meals, calories, and macros to Apple Health.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings saves the meals you log, including calories, protein, carbohydrates, and fat, to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -501,8 +500,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CaloriesRings uses the camera to analyze your food and estimate macros.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "CaloriesRings reads your health data to stay in sync.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings writes your meals, calories, and macros to Apple Health.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings saves the meals you log, including calories, protein, carbohydrates, and fat, to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

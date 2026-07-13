@@ -15,12 +15,16 @@ final class LoggingPresenter {
 
     func save(delta: Int, context: ModelContext) -> Bool {
         let entry = MealEntry(mealType: selectedMeal, deltaCalories: delta)
+        return save(entry: entry, context: context)
+    }
+
+    private func save(entry: MealEntry, context: ModelContext) -> Bool {
         context.insert(entry)
         do {
             try context.save()
             WidgetCenter.shared.reloadTimelines(ofKind: "CaloriesRingsWidget")
-            let (cal, date) = (entry.deltaCalories, entry.timestamp)
-            Task { await HealthKitManager.shared.log(calories: cal, proteinGrams: 0, carbsGrams: 0, fatGrams: 0, at: date) }
+            let nutrition = HealthKitNutrition(entry: entry)
+            Task { try? await HealthKitManager.shared.save(nutrition) }
             return true
         } catch {
             errorMessage = "Failed to save: \(error.localizedDescription)"

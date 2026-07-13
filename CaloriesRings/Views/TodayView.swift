@@ -73,7 +73,7 @@ struct TodayView: View {
         }
         .sheet(isPresented: $presenter.showingLogSheet) {
             LoggingSheetView(initialMeal: presenter.activeMeal)
-                .presentationDetents([.fraction(0.35)])
+                .presentationDetents([.medium, .large])
         }
     }
 

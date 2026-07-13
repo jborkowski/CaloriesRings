@@ -11,10 +11,23 @@ final class LoggingPresenter {
     var showingError = false
     var errorMessage = ""
 
-    let presets = [100, 200, 300, 400]
+    let caloriePresets = [100, 200, 300, 400]
+    let mealPresets = MealPreset.defaults
 
     func save(delta: Int, context: ModelContext) -> Bool {
         let entry = MealEntry(mealType: selectedMeal, deltaCalories: delta)
+        return save(entry: entry, context: context)
+    }
+
+    func save(preset: MealPreset, context: ModelContext) -> Bool {
+        let entry = MealEntry(
+            mealType: selectedMeal,
+            deltaCalories: preset.calories,
+            note: preset.name,
+            proteinGrams: preset.proteinGrams,
+            carbsGrams: preset.carbsGrams,
+            fatGrams: preset.fatGrams
+        )
         return save(entry: entry, context: context)
     }
 

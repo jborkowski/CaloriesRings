@@ -14,6 +14,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AA00000100000000000000CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E0625352EDB3FB600DA7656 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E06253C2EDB3FB600DA7656;
+			remoteInfo = CaloriesRings;
+		};
 		8E0625922EDB6F0100DA7656 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E0625352EDB3FB600DA7656 /* Project object */;
@@ -208,6 +215,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AA00000100000000000000DA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				AA000001000000000000001A /* CaloriesRingsTests */,
@@ -309,6 +317,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AA00000100000000000000DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E06253C2EDB3FB600DA7656 /* CaloriesRings */;
+			targetProxy = AA00000100000000000000CA /* PBXContainerItemProxy */;
+		};
 		8E0625932EDB6F0100DA7656 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8E0625802EDB6F0000DA7656 /* CaloriesRingsWidgetExtension */;

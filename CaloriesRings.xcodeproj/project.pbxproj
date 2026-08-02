@@ -70,12 +70,20 @@
 			);
 			target = 8E0625802EDB6F0000DA7656 /* CaloriesRingsWidgetExtension */;
 		};
+		8E4D049D301FF1BD000D1A52 /* Exceptions for "CaloriesRings" folder in "CaloriesRings" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8E06253C2EDB3FB600DA7656 /* CaloriesRings */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E06253F2EDB3FB600DA7656 /* CaloriesRings */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				8E4D049D301FF1BD000D1A52 /* Exceptions for "CaloriesRings" folder in "CaloriesRings" target */,
 				8E0625DE2EDB808600DA7656 /* Exceptions for "CaloriesRings" folder in "CaloriesRingsWidgetExtension" target */,
 			);
 			path = CaloriesRings;
@@ -464,7 +472,10 @@
 				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CaloriesRings/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CaloriesRings uses the camera to analyze your food and estimate macros.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "CaloriesRings reads nutrition data from Apple Health to show your daily calorie and macro progress alongside meals logged in the app.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings saves the meals you log, including calories, protein, carbohydrates, and fat, to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -500,7 +511,10 @@
 				DEVELOPMENT_TEAM = ATQ45662TX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CaloriesRings/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "CaloriesRings uses the camera to analyze your food and estimate macros.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "CaloriesRings reads nutrition data from Apple Health to show your daily calorie and macro progress alongside meals logged in the app.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CaloriesRings saves the meals you log, including calories, protein, carbohydrates, and fat, to Apple Health.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

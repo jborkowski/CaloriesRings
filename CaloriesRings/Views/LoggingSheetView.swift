@@ -6,6 +6,7 @@ struct LoggingSheetView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \SavedMealPreset.createdAt, order: .reverse) private var savedPresets: [SavedMealPreset]
     @State private var presenter = LoggingPresenter()
     @State private var showingPhotoAnalysis = false
 
@@ -13,6 +14,10 @@ struct LoggingSheetView: View {
         GridItem(.flexible(), spacing: 12),
         GridItem(.flexible(), spacing: 12)
     ]
+
+    private var selectedMealPresets: [SavedMealPreset] {
+        savedPresets.filter { $0.mealType == presenter.selectedMeal }
+    }
 
     var body: some View {
         NavigationStack {
@@ -36,8 +41,32 @@ struct LoggingSheetView: View {
                         .pickerStyle(.segmented)
                     }
 
+                    if !selectedMealPresets.isEmpty {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("My \(presenter.selectedMeal.label.lowercased()) presets").font(.headline)
+
+                            LazyVGrid(columns: columns, spacing: 12) {
+                                ForEach(selectedMealPresets) { preset in
+                                    Button {
+                                        save(savedPreset: preset)
+                                    } label: {
+                                        mealPresetCard(mealPreset(from: preset))
+                                    }
+                                    .buttonStyle(.plain)
+                                    .contextMenu {
+                                        Button("Delete", systemImage: "trash", role: .destructive) {
+                                            presenter.delete(savedPreset: preset, context: context)
+                                        }
+                                    }
+                                    .accessibilityLabel("\(preset.name), \(preset.portionDescription), \(preset.calories) calories")
+                                    .accessibilityHint("Adds \(preset.calories) calories to \(presenter.selectedMeal.label)")
+                                }
+                            }
+                        }
+                    }
+
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Quick meals").font(.headline)
+                        Text("Default meals").font(.headline)
 
                         LazyVGrid(columns: columns, spacing: 12) {
                             ForEach(presenter.mealPresets) { preset in
@@ -111,10 +140,27 @@ struct LoggingSheetView: View {
         }
     }
 
+    private func mealPreset(from savedPreset: SavedMealPreset) -> MealPreset {
+        MealPreset(
+            id: savedPreset.id.uuidString,
+            name: savedPreset.name,
+            portionDescription: savedPreset.portionDescription,
+            symbol: savedPreset.symbol,
+            calories: savedPreset.calories,
+            proteinGrams: savedPreset.proteinGrams,
+            carbsGrams: savedPreset.carbsGrams,
+            fatGrams: savedPreset.fatGrams
+        )
+    }
+
     private func mealPresetCard(_ preset: MealPreset) -> some View {
         VStack(alignment: .leading, spacing: 7) {
             HStack(alignment: .firstTextBaseline) {
-                Text(preset.symbol).font(.title2)
+                if preset.symbol.contains(".") {
+                    Image(systemName: preset.symbol).font(.title2)
+                } else {
+                    Text(preset.symbol).font(.title2)
+                }
                 Spacer()
                 Text("\(preset.calories) kcal")
                     .font(.caption.bold())
@@ -151,5 +197,9 @@ struct LoggingSheetView: View {
 
     private func save(preset: MealPreset) {
         if presenter.save(preset: preset, context: context) { dismiss() }
+    }
+
+    private func save(savedPreset: SavedMealPreset) {
+        if presenter.save(savedPreset: savedPreset, context: context) { dismiss() }
     }
 }

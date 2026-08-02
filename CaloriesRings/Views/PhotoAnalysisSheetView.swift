@@ -9,6 +9,7 @@ struct PhotoAnalysisSheetView: View {
     @State private var presenter = PhotoAnalysisPresenter()
     @State private var capturedImage: UIImage?
     @State private var showingCamera = false
+    @State private var presetSaved = false
 
     var body: some View {
         NavigationStack {
@@ -24,13 +25,6 @@ struct PhotoAnalysisSheetView: View {
         .onAppear { presenter.selectedMeal = initialMeal; showingCamera = true }
         .sheet(isPresented: $showingCamera, onDismiss: handleImageSelected) {
             ImagePicker(selectedImage: $capturedImage)
-        }
-        .alert("Enter Z.AI API Key", isPresented: $presenter.showingAPIKeyAlert) {
-            TextField("sk-...", text: $presenter.apiKeyInput)
-            Button("Save") { presenter.saveAPIKey() }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("Get your free API key at api.z.ai")
         }
     }
 
@@ -94,13 +88,21 @@ struct PhotoAnalysisSheetView: View {
                     ForEach(MealType.allCases, id: \.self) { Text($0.label).tag($0) }
                 }.pickerStyle(.segmented)
 
-                Button("Accept") {
+                Button("Log Meal") {
                     if presenter.accept(estimate: estimate, context: context) { dismiss() }
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
 
-                Button("Re-take") { capturedImage = nil; presenter.reset(); showingCamera = true }
+                Button {
+                    presetSaved = presenter.savePreset(estimate: estimate, context: context)
+                } label: {
+                    Label(presetSaved ? "Preset Saved" : "Save as Preset", systemImage: presetSaved ? "checkmark.circle.fill" : "plus.circle")
+                }
+                .buttonStyle(.bordered)
+                .disabled(presetSaved)
+
+                Button("Re-take") { capturedImage = nil; presetSaved = false; presenter.reset(); showingCamera = true }
                     .foregroundStyle(.secondary)
             }
             .padding()
@@ -125,6 +127,7 @@ struct PhotoAnalysisSheetView: View {
 
     private func handleImageSelected() {
         guard let image = capturedImage else { return }
+        presetSaved = false
         presenter.analyze(image: image)
     }
 }

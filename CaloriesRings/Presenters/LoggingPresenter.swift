@@ -31,6 +31,29 @@ final class LoggingPresenter {
         return save(entry: entry, context: context)
     }
 
+    func save(savedPreset: SavedMealPreset, context: ModelContext) -> Bool {
+        savedPreset.lastUsedAt = .now
+        let entry = MealEntry(
+            mealType: selectedMeal,
+            deltaCalories: savedPreset.calories,
+            note: savedPreset.name,
+            proteinGrams: savedPreset.proteinGrams,
+            carbsGrams: savedPreset.carbsGrams,
+            fatGrams: savedPreset.fatGrams
+        )
+        return save(entry: entry, context: context)
+    }
+
+    func delete(savedPreset: SavedMealPreset, context: ModelContext) {
+        context.delete(savedPreset)
+        do {
+            try context.save()
+        } catch {
+            errorMessage = "Failed to delete preset: \(error.localizedDescription)"
+            showingError = true
+        }
+    }
+
     private func save(entry: MealEntry, context: ModelContext) -> Bool {
         context.insert(entry)
         do {

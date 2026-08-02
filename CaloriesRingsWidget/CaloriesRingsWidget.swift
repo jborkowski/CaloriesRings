@@ -32,7 +32,6 @@ struct Provider: TimelineProvider {
         completion: @escaping (Timeline<CalorieEntry>) -> Void
     ) {
         let now = Date()
-
         let summary = loadTodayWidgetSummary()
 
         let entry = CalorieEntry(
@@ -57,7 +56,8 @@ private struct WidgetSummary {
 private func loadTodayWidgetSummary() -> WidgetSummary {
     let schema = Schema([
         UserProfile.self,
-        MealEntry.self
+        MealEntry.self,
+        SavedMealPreset.self
     ])
 
     let groupID = "group.me.thebo.calorierings"
@@ -68,6 +68,7 @@ private func loadTodayWidgetSummary() -> WidgetSummary {
     }
 
     let storeURL = containerURL.appendingPathComponent("CalorieRings.store")
+    try? SwiftDataStoreProtection.prepareStoreDirectory(at: containerURL)
 
     let configuration = ModelConfiguration(
         schema: schema,
@@ -80,6 +81,7 @@ private func loadTodayWidgetSummary() -> WidgetSummary {
             for: schema,
             configurations: [configuration]
         )
+        SwiftDataStoreProtection.applyProtection(toStoreAt: storeURL)
         let context = ModelContext(container)
 
         let startOfToday = Calendar.current.startOfDay(for: Date())
@@ -170,5 +172,3 @@ struct CaloriesRingsWidget: Widget {
         .description("See today's total calories.")
     }
 }
-
-

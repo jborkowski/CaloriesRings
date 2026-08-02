@@ -29,6 +29,81 @@ enum MealType: String, Codable, CaseIterable, Sendable {
     }
 }
 
+enum SwiftDataStoreProtection {
+    static func prepareStoreDirectory(at directoryURL: URL) throws {
+        try FileManager.default.createDirectory(
+            at: directoryURL,
+            withIntermediateDirectories: true
+        )
+        try setCompleteProtection(at: directoryURL)
+    }
+
+    static func applyProtection(toStoreAt storeURL: URL) {
+        let protectedURLs = [
+            storeURL,
+            URL(fileURLWithPath: storeURL.path + "-shm"),
+            URL(fileURLWithPath: storeURL.path + "-wal")
+        ]
+
+        for url in protectedURLs where FileManager.default.fileExists(atPath: url.path) {
+            try? setCompleteProtection(at: url)
+        }
+    }
+
+    private static func setCompleteProtection(at url: URL) throws {
+        try FileManager.default.setAttributes(
+            [.protectionKey: FileProtectionType.complete],
+            ofItemAtPath: url.path
+        )
+    }
+}
+
+@Model
+final class SavedMealPreset {
+    @Attribute(.unique) var id: UUID
+    var name: String
+    var portionDescription: String
+    var symbol: String
+    var calories: Int
+    var proteinGrams: Double
+    var carbsGrams: Double
+    var fatGrams: Double
+    var mealTypeRaw: String
+    var createdAt: Date
+    var lastUsedAt: Date?
+
+    var mealType: MealType {
+        get { MealType(rawValue: mealTypeRaw) ?? .breakfast }
+        set { mealTypeRaw = newValue.rawValue }
+    }
+
+    init(
+        id: UUID = UUID(),
+        name: String,
+        portionDescription: String,
+        symbol: String = "fork.knife",
+        calories: Int,
+        proteinGrams: Double,
+        carbsGrams: Double,
+        fatGrams: Double,
+        mealType: MealType,
+        createdAt: Date = .now,
+        lastUsedAt: Date? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.portionDescription = portionDescription
+        self.symbol = symbol
+        self.calories = calories
+        self.proteinGrams = proteinGrams
+        self.carbsGrams = carbsGrams
+        self.fatGrams = fatGrams
+        self.mealTypeRaw = mealType.rawValue
+        self.createdAt = createdAt
+        self.lastUsedAt = lastUsedAt
+    }
+}
+
 @Model
 final class MealEntry {
     @Attribute(.unique) var id: UUID

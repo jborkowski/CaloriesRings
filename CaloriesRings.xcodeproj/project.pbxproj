@@ -9,24 +9,24 @@
 /* Begin PBXBuildFile section */
 		8E0625822EDB6F0000DA7656 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0625632EDB6EA900DA7656 /* WidgetKit.framework */; };
 		8E0625832EDB6F0000DA7656 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0625652EDB6EA900DA7656 /* SwiftUI.framework */; };
-		AA0000FF000000000000FF01 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0000FF000000000000FF00 /* HealthKit.framework */; };
 		8E0625942EDB6F0100DA7656 /* CaloriesRingsWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8E0625812EDB6F0000DA7656 /* CaloriesRingsWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA0000FF000000000000FF01 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0000FF000000000000FF00 /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AA00000100000000000000CA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8E0625352EDB3FB600DA7656 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8E06253C2EDB3FB600DA7656;
-			remoteInfo = CaloriesRings;
-		};
 		8E0625922EDB6F0100DA7656 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E0625352EDB3FB600DA7656 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8E0625802EDB6F0000DA7656;
 			remoteInfo = CaloriesRingsWidgetExtension;
+		};
+		AA00000100000000000000CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E0625352EDB3FB600DA7656 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E06253C2EDB3FB600DA7656;
+			remoteInfo = CaloriesRings;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -48,9 +48,9 @@
 		8E06253D2EDB3FB600DA7656 /* CaloriesRings.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaloriesRings.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E0625632EDB6EA900DA7656 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8E0625652EDB6EA900DA7656 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		AA0000FF000000000000FF00 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		8E0625812EDB6F0000DA7656 /* CaloriesRingsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CaloriesRingsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA00000100000000000000BA /* CaloriesRingsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaloriesRingsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000FF000000000000FF00 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -317,15 +317,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AA00000100000000000000DA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8E06253C2EDB3FB600DA7656 /* CaloriesRings */;
-			targetProxy = AA00000100000000000000CA /* PBXContainerItemProxy */;
-		};
 		8E0625932EDB6F0100DA7656 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8E0625802EDB6F0000DA7656 /* CaloriesRingsWidgetExtension */;
 			targetProxy = 8E0625922EDB6F0100DA7656 /* PBXContainerItemProxy */;
+		};
+		AA00000100000000000000DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E06253C2EDB3FB600DA7656 /* CaloriesRings */;
+			targetProxy = AA00000100000000000000CA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -471,6 +471,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -506,6 +507,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,6 +540,7 @@
 				INFOPLIST_FILE = CaloriesRingsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CaloriesRingsWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -572,6 +575,7 @@
 				INFOPLIST_FILE = CaloriesRingsWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CaloriesRingsWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -599,6 +603,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ATQ45662TX;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.thebo.CaloriesRings.CaloriesRingsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,6 +623,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ATQ45662TX;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.thebo.CaloriesRings.CaloriesRingsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -15,27 +15,37 @@ enum PhotoAnalysisState {
 final class PhotoAnalysisPresenter {
     var state: PhotoAnalysisState = .idle
     var selectedMeal: MealType = .breakfast
-    var showingAPIKeyAlert = false
-    var apiKeyInput = ""
 
     func analyze(image: UIImage) {
         state = .analyzing
         Task {
             do {
-                let estimate = try await GLMVisionClient.shared.analyzeFood(image: image)
+                let estimate = try await FoundationModelsVisionClient.shared.analyzeFood(image: image)
                 state = .result(estimate)
-            } catch GLMError.missingAPIKey {
-                showingAPIKeyAlert = true
-                state = .idle
             } catch {
                 state = .error(error.localizedDescription)
             }
         }
     }
 
-    func saveAPIKey() {
-        KeychainClient.save(apiKeyInput)
-        apiKeyInput = ""
+    func savePreset(estimate: MacroEstimate, context: ModelContext) -> Bool {
+        let preset = SavedMealPreset(
+            name: estimate.foodName,
+            portionDescription: estimate.servingSize,
+            calories: estimate.calories,
+            proteinGrams: estimate.proteinG,
+            carbsGrams: estimate.carbsG,
+            fatGrams: estimate.fatG,
+            mealType: selectedMeal
+        )
+        context.insert(preset)
+        do {
+            try context.save()
+            return true
+        } catch {
+            state = .error("Preset save failed: \(error.localizedDescription)")
+            return false
+        }
     }
 
     func accept(estimate: MacroEstimate, context: ModelContext) -> Bool {
